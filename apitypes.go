@@ -242,11 +242,23 @@ type ApplicationKeyResponse struct {
 	Capabilities        []string `json:"capabilities"`
 	AccountID           string   `json:"accountId"`
 	ExpirationTimestamp int64    `json:"expirationTimestamp"`
-	BucketId            string   `json:"bucketId"`
+	BucketId            string   `json:"bucketId,omitempty"`
+	BucketIds           []string `json:"bucketIds,omitempty"`
 	NamePrefix          string   `json:"namePrefix"`
 	Options             []string `json:"options"`
 }
 
 type DeleteKeyRequest struct {
 	ApplicationKeyId string `json:"applicationKeyId"`
+}
+
+type listKeysRequest struct {
+	AccountID             string `json:"accountId"`
+	MaxKeyCount           int    `json:"maxKeyCount,omitempty"`
+	StartApplicationKeyId string `json:"startApplicationKeyId,omitempty"`
+}
+
+type listKeysResponse struct {
+	Keys                 []*ApplicationKeyResponse `json:"keys"`
+	NextApplicationKeyId string                    `json:"nextApplicationKeyId"`
 }
