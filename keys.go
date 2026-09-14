@@ -1,5 +1,6 @@
 package backblaze
 
+import "errors"
 
 // CreateApplicationKey creates application key
 // It is possible to limit application key capabilities by defining an
@@ -8,6 +9,10 @@ package backblaze
 // This function to work requires master application key to
 // be used for authenticaion
 func (b *B2) CreateApplicationKey(keyDetails *CreateKeyRequest) (*ApplicationKeyResponse, error) {
+	if len(keyDetails.Capabilities) < 1 {
+		return nil, errors.New("Cannot create ApplicationKey without any capabilities")
+	}
+
 	request := &CreateKeyRequest{
 		AccountID:              b.AccountID,
 		Capabilities:           keyDetails.Capabilities,
